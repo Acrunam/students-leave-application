@@ -1,0 +1,1 @@
+A web application that allows students to apply for days off that can then be approved/rejected by their professors
