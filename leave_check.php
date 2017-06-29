@@ -23,6 +23,8 @@
 
 require "connectDB.php";
 
+$all_leave_ids = array();
+
 $strQuery = "SELECT * from leave_applications WHERE status = 'Pending' ";
 
 $result = mysqli_query($connection, $strQuery) or Exit("Query execution failed");
@@ -47,7 +49,7 @@ if($result->num_rows>0){
 	
 	while($row = $result->fetch_assoc()){
 		
-		$leaveid = $row["application_id"];
+		array_push($all_leave_ids,$row["application_id"]);
 			
 		echo 
 		"<tr>
@@ -56,10 +58,11 @@ if($result->num_rows>0){
 		<td>".$row["email"]."</td>
 		<td>".$row["days_requested"]."</td>
 		<td>".$row["status"]."</td>
-		<td><button class='button-success pure-button' name='approve' type='submit'>Approve</button></td>
-		<td><button class='button-error pure-button' name='reject' type='submit'>Reject</button></td>
+		<td><button class='button-success pure-button' name='approve' type='submit' id=".$row['application_id'].">Approve</button></td>
+		<td><button class='button-error pure-button' name='reject' type='submit' id=".$row['application_id'].">Reject</button></td>
 		</tr>";	
-	}	
+	}
+	
 	echo "</table><form>";
 }
 
@@ -72,11 +75,7 @@ else {
 	</div>";
 	}
 	
-	//mysqli_close($connection);
-	
 ?>
-
-
 
 </div>
 
