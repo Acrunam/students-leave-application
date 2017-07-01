@@ -23,15 +23,13 @@
 
 require "connectDB.php";
 
-$all_leave_ids = array();
-
 $strQuery = "SELECT * from leave_applications WHERE status = 'Pending' ";
 
 $result = mysqli_query($connection, $strQuery) or Exit("Query execution failed");
 
 if($result->num_rows>0){
 	
-	echo "<form action='leave_request_processor.php' method='post' target='_self' name='leave_check' class='pure-form pure-form-aligned'>";
+	echo "<form action='leave_request_processor.php' method='get' target='_self' name='leave_check' class='pure-form pure-form-aligned'>";
 	
 	    // output data of each row
 	
@@ -48,8 +46,6 @@ if($result->num_rows>0){
     </thead>";
 	
 	while($row = $result->fetch_assoc()){
-		
-		array_push($all_leave_ids,$row["application_id"]);
 			
 		echo 
 		"<tr>
@@ -58,12 +54,12 @@ if($result->num_rows>0){
 		<td>".$row["email"]."</td>
 		<td>".$row["days_requested"]."</td>
 		<td>".$row["status"]."</td>
-		<td><button class='button-success pure-button' name='approve' type='submit' id=".$row['application_id'].">Approve</button></td>
-		<td><button class='button-error pure-button' name='reject' type='submit' id=".$row['application_id'].">Reject</button></td>
+		<td><a class='button-success pure-button' href='leave_request_acceptor.php?id=".$row["application_id"]."'>Approve</a></td>
+		<td><a class='button-error pure-button' href='leave_request_rejector.php?id=".$row["application_id"]."'>Reject</a></td>
 		</tr>";	
 	}
 	
-	echo "</table><form>";
+	echo "</table>";
 }
 
 else {
