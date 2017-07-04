@@ -29,7 +29,7 @@ $result = mysqli_query($connection, $strQuery) or Exit("Query execution failed")
 
 if($result->num_rows>0){
 	
-	echo "<form action='leave_request_processor.php' method='get' target='_self' name='leave_check' class='pure-form pure-form-aligned'>";
+	echo "<form method='get' target='_self' name='leave_check' class='pure-form pure-form-aligned'>";
 	
 	    // output data of each row
 	
